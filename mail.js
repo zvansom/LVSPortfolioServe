@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
 });
 
 const generateHTML = (filename, options = {}) => {
-  const html = pug.renderFile(`${__dirname}/../views/email/${filename}.pug`, options);
+  const html = pug.renderFile(`${__dirname}/../views/${filename}.pug`, options);
   const inlined = juice(html);
   return inlined;
 };
@@ -24,7 +24,7 @@ exports.send = async (options) => {
   const text = htmlToText.fromString(html);
 
   const mailOptions = {
-    from: `Wes Bos <noreply@wesbos.com>`,
+    from: `Your Portfolio <noreply@LVSportfolio.com>`,
     to: options.to,
     subject: options.subject,
     html,
