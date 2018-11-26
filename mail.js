@@ -24,7 +24,7 @@ exports.send = async (options) => {
   const text = htmlToText.fromString(html);
 
   const mailOptions = {
-    from: `Your Portfolio <noreply@LVSportfolio.com>`,
+    from: options.email,
     to: options.to,
     subject: options.subject,
     html,
