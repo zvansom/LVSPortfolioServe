@@ -13,6 +13,12 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
-    "express": "^4.16.4"
+    "dotenv": "^6.1.0",
+    "es6-promisify": "^6.0.1",
+    "express": "^4.16.4",
+    "html-to-text": "^4.0.0",
+    "juice": "^5.0.1",
+    "nodemailer": "^4.7.0",
+    "pug": "^2.0.3"
   }
 }

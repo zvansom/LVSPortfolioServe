@@ -2,7 +2,8 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const juice = require('juice');
 const htmlToText = require('html-to-text');
-const promisify = require('es6-promisify');
+// For the currently non-working promise based mail.
+// const promisify = require('es6-promisify');
 
 const transport = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -14,22 +15,34 @@ const transport = nodemailer.createTransport({
 });
 
 const generateHTML = (filename, options = {}) => {
-  const html = pug.renderFile(`${__dirname}/../views/${filename}.pug`, options);
+  const html = pug.renderFile(`${__dirname}/views/${filename}.pug`, options.body);
   const inlined = juice(html);
   return inlined;
 };
 
-exports.send = async (options) => {
+exports.send = (options) => {
   const html = generateHTML(options.filename, options);
   const text = htmlToText.fromString(html);
-
+  const { email, to, subject } = options.body;
   const mailOptions = {
-    from: options.email,
-    to: options.to,
-    subject: options.subject,
+    from: email,
+    to,
+    subject,
     html,
     text
   };
-  const sendMail = promisify(transport.sendMail, transport);
-  return sendMail(mailOptions);
+
+  // Callback based version of sendMail which works
+  transport.sendMail(mailOptions, (err, info) => {
+    if(err) { 
+      console.log(err);
+      return err; 
+    }
+    console.log('info', info);
+    return info;
+  });
+
+  // ! This is the promisified version. It doesn't work, but I don't know why.
+  // const sendMail = promisify(transport.sendMail, transport);
+  // return sendMail(mailOptions);
 };

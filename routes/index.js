@@ -3,15 +3,16 @@ const mail = require('../mail');
 
 const router = express.Router();
 
-router.post('/test', async (req, res) => {
+router.post('/test', (req, res) => {
   const { body } = req;
   body.to = 'lindsayvansomeren@gmail.com';
-  await mail.send({
+  const response = mail.send({
     body,
     filename: 'portfolio-email',
     Subject: 'New Message from your portfolio',
   });
-  res.send(200);
+  console.log(response);
+  // await res.send(response);
 });
 
 module.exports = router;
