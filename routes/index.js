@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const router = express.Router();
 
+router.get('/', (req, res) => {res.send('Hello')});
+
 router.post('/test', cors(), async (req, res) => {
   const { body } = req;
   body.to = 'lindsayvansomeren@gmail.com';
